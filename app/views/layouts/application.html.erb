@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DeviseAuth</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav style="padding: 20px; background-color: #f5f5f5; margin-bottom: 20px;">
+      <%= link_to "Blogs", root_path, style: "margin-right: 15px;" %>
+
+      <% if user_signed_in? %>
+        <span style="margin-right: 15px;">Logged in as: <strong><%= current_user.email %></strong></span>
+        <%= link_to "New Blog", new_blog_path, style: "margin-right: 15px;" %>
+        <%= button_to "Logout", destroy_user_session_path, method: :delete, style: "display: inline;" %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path, style: "margin-right: 15px;" %>
+        <%= link_to "Sign Up", new_user_registration_path, style: "margin-right: 15px;" %>
+      <% end %>
+    </nav>
+
+    <div style="padding: 20px;">
+      <% if notice %>
+        <p class="notice" style="color: green; padding: 10px; background-color: #d4edda; margin-bottom: 20px;"><%= notice %></p>
+      <% end %>
+
+      <% if alert %>
+        <p class="alert" style="color: red; padding: 10px; background-color: #f8d7da; margin-bottom: 20px;"><%= alert %></p>
+      <% end %>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>
