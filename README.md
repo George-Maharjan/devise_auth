@@ -13,14 +13,14 @@ A Ruby on Rails application demonstrating user authentication with Devise and bl
 
 - Ruby 3.3.1
 - Rails 7.1.5+
-- SQLite3
+- PostgreSQL 12+
 - Node.js (for asset compilation)
 
 ## Tech Stack
 
 - **Ruby on Rails** 7.1.5
 - **Devise** - User authentication
-- **SQLite3** - Database
+- **PostgreSQL** - Database
 - **Hotwire** (Turbo & Stimulus) - Modern JavaScript framework
 - **Tailwind CSS** or Bootstrap (if configured)
 - **Docker** - Containerization support
@@ -35,24 +35,38 @@ A Ruby on Rails application demonstrating user authentication with Devise and bl
    cd devise_auth
    ```
 
-2. **Install Ruby dependencies**
+2. **Install PostgreSQL**
+
+   macOS (using Homebrew):
+   ```bash
+   brew install postgresql@14
+   brew services start postgresql@14
+   ```
+
+   Ubuntu/Debian:
+   ```bash
+   sudo apt-get install postgresql postgresql-contrib libpq-dev
+   sudo service postgresql start
+   ```
+
+3. **Install Ruby dependencies**
    ```bash
    bundle install
    ```
 
-3. **Setup the database**
+4. **Setup the database**
    ```bash
    rails db:create
    rails db:migrate
    rails db:seed  # Optional: if you have seed data
    ```
 
-4. **Start the Rails server**
+5. **Start the Rails server**
    ```bash
    rails server
    ```
 
-5. **Visit the application**
+6. **Visit the application**
    Open your browser and navigate to `http://localhost:3000`
 
 ### Docker Setup
@@ -77,9 +91,16 @@ Devise is configured for User authentication. Key configuration files:
 
 ### Database
 
-This application uses SQLite3 for development. For production, consider switching to PostgreSQL or MySQL.
+This application uses PostgreSQL for all environments.
 
 Database configuration: `config/database.yml`
+
+**Database names:**
+- Development: `devise_auth_development`
+- Test: `devise_auth_test`
+- Production: `devise_auth_production`
+
+For production, set the `DEVISE_AUTH_DATABASE_PASSWORD` environment variable.
 
 ## Application Structure
 
@@ -120,7 +141,9 @@ Create a `.env` file or set the following environment variables:
 
 ```bash
 RAILS_MASTER_KEY=<your_master_key>
-DATABASE_URL=<your_database_url>  # For production
+DEVISE_AUTH_DATABASE_PASSWORD=<your_database_password>  # For production
+# Or use DATABASE_URL for full connection string
+# DATABASE_URL=postgresql://username:password@localhost/devise_auth_production
 ```
 
 ## Common Tasks
