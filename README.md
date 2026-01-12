@@ -1,24 +1,164 @@
-# README
+# Devise Auth Blog
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Ruby on Rails application demonstrating user authentication with Devise and blog management functionality.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- User authentication (sign up, sign in, sign out) using Devise
+- Blog post management (CRUD operations)
+- User-specific blog posts
+- Docker support for containerized deployment
 
-* System dependencies
+## Prerequisites
 
-* Configuration
+- Ruby 3.3.1
+- Rails 7.1.5+
+- SQLite3
+- Node.js (for asset compilation)
 
-* Database creation
+## Tech Stack
 
-* Database initialization
+- **Ruby on Rails** 7.1.5
+- **Devise** - User authentication
+- **SQLite3** - Database
+- **Hotwire** (Turbo & Stimulus) - Modern JavaScript framework
+- **Tailwind CSS** or Bootstrap (if configured)
+- **Docker** - Containerization support
 
-* How to run the test suite
+## Getting Started
 
-* Services (job queues, cache servers, search engines, etc.)
+### Local Development Setup
 
-* Deployment instructions
+1. **Clone the repository**
+   ```bash
+   git clone git@github.com-GurzuInc:George-Maharjan/devise_auth.git
+   cd devise_auth
+   ```
 
-* ...
+2. **Install Ruby dependencies**
+   ```bash
+   bundle install
+   ```
+
+3. **Setup the database**
+   ```bash
+   rails db:create
+   rails db:migrate
+   rails db:seed  # Optional: if you have seed data
+   ```
+
+4. **Start the Rails server**
+   ```bash
+   rails server
+   ```
+
+5. **Visit the application**
+   Open your browser and navigate to `http://localhost:3000`
+
+### Docker Setup
+
+1. **Build the Docker image**
+   ```bash
+   docker build -t devise_auth .
+   ```
+
+2. **Run the container**
+   ```bash
+   docker run -p 3000:3000 devise_auth
+   ```
+
+## Configuration
+
+### Devise Configuration
+
+Devise is configured for User authentication. Key configuration files:
+- `config/initializers/devise.rb` - Devise settings
+- `config/routes.rb` - Authentication routes
+
+### Database
+
+This application uses SQLite3 for development. For production, consider switching to PostgreSQL or MySQL.
+
+Database configuration: `config/database.yml`
+
+## Application Structure
+
+- **Models**: User (Devise), Blog
+- **Controllers**: BlogsController, ApplicationController
+- **Routes**:
+  - Devise routes for authentication (`/users/sign_in`, `/users/sign_up`, etc.)
+  - Blog CRUD routes (`/blogs`)
+  - Root path: Blogs index
+
+## Running Tests
+
+```bash
+# Run all tests
+rails test
+
+# Run system tests
+rails test:system
+```
+
+## Deployment
+
+### Heroku
+
+```bash
+heroku create
+git push heroku main
+heroku run rails db:migrate
+```
+
+### Docker Production
+
+The Dockerfile is production-ready. Configure your environment variables and deploy to your preferred container platform.
+
+## Environment Variables
+
+Create a `.env` file or set the following environment variables:
+
+```bash
+RAILS_MASTER_KEY=<your_master_key>
+DATABASE_URL=<your_database_url>  # For production
+```
+
+## Common Tasks
+
+### Create a new user (Console)
+```bash
+rails console
+User.create(email: 'user@example.com', password: 'password')
+```
+
+### Reset database
+```bash
+rails db:reset
+```
+
+### View routes
+```bash
+rails routes
+```
+
+## Troubleshooting
+
+- **Bundle install fails**: Ensure you have the correct Ruby version installed (`ruby -v`)
+- **Database errors**: Run `rails db:reset` to recreate the database
+- **Port already in use**: Change the port with `rails s -p 3001`
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is part of a bootcamp training exercise.
+
+## Contact
+
+For questions or support, please open an issue in the repository.
